@@ -16,6 +16,8 @@ public class LEDManager implements Runnable {
 	private long last = System.currentTimeMillis();
 	private LEDScript script;
 	private TestRender render;
+	private int updates;
+	private long testU = System.currentTimeMillis();
 
 	public void start() {
 		running = true;
@@ -40,10 +42,25 @@ public class LEDManager implements Runnable {
 		System.out.println(running);
 		while(running) {
 			long current = System.currentTimeMillis();
+			if(current - testU >= 1000) {
+				testU = current;
+				if(updates < updatePerSecond - 10) {
+					System.out.println("Can't keep up! Only had " + updates);
+				}
+				updates = 0;
+			}
 			if(current - last >= (1000 / updatePerSecond)) {
+				updates++;
 				last = current;
 				script.update();
 			}
+			try {
+				Thread.sleep(1);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
 		}
 		
 		

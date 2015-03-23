@@ -14,7 +14,7 @@ public class TestScript extends LEDScript {
 		super(man);
 		
 		
-		getManager().setUpdatePerSecond(30);
+		getManager().setUpdatePerSecond(75);
 	}
 
 	@Override
